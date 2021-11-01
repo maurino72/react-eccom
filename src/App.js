@@ -1,10 +1,10 @@
 import "./App.css";
-import Homepage from "./Homepage";
+import HomepageScreen from "./views/screens/HomeScreen/HomepageScreen";
 
 function App() {
   return (
     <div>
-      <Homepage />
+      <HomepageScreen />
     </div>
   );
 }
