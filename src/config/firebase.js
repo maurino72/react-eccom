@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import {
   getAuth,
+  signOut,
   signInWithPopup,
   GoogleAuthProvider,
   onAuthStateChanged
@@ -24,6 +25,9 @@ export const firestore = getFirestore(firebaseApp);
 export { auth, onAuthStateChanged };
 const provider = new GoogleAuthProvider();
 provider.setCustomParameters({ prompt: "select_account" });
+
+export const logOut = () =>
+  signOut(auth).then(console.log("Successfully Logged out"));
 
 export const GoogleSignIn = () => signInWithPopup(auth, provider);
 
