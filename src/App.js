@@ -25,12 +25,16 @@ class App extends React.Component {
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
 
-        this.setState({
-          currentUser: {
-            id: userRef.id,
-            ...userRef.data()
-          }
-        });
+        if (userRef) {
+          this.setState({
+            currentUser: {
+              id: userRef.id,
+              ...userRef.data()
+            }
+          });
+        }
+
+        console.log(this.state);
       }
       this.setState({ currentUser: userAuth });
     });
