@@ -7,6 +7,7 @@ import HomepageScreen from "./views/screens/HomeScreen/HomepageScreen";
 import Header from "./views/components/Header/Header";
 import AuthenticationScreen from "./views/screens/AuthenticationScreen/AuthenticationScreen";
 import { auth } from "./config/firebase";
+import { createUserProfileDocument } from "./config/firestore";
 
 class App extends React.Component {
   constructor() {
@@ -20,8 +21,18 @@ class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
-      this.setState({ currentUser: user });
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth);
+
+        this.setState({
+          currentUser: {
+            id: userRef.id,
+            ...userRef.data()
+          }
+        });
+      }
+      this.setState({ currentUser: userAuth });
     });
   }
 
